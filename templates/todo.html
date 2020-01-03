@@ -1,20 +1,40 @@
-<h1>My To Do List</h1>
 
-<ul>
+{% extends 'background.html' %}
+{% block content %}
+<h1 style="text-align: center;">My To Do List</h1>
+<br>
+<hr>
+<body leftmargin="275">  
     
-        {% for todo_item in todo_items %}
-        <li>{{todo_item.content}}  ---  {{todo_item.date_todo}}
-            <form action = "/deletetodo/{{todo_item.id}}/" style = "display: inline;" method = "post">
-            {% csrf_token %}
-            <input type = 'submit' value = "Delete"/>
-            </form>
-        </li>
-
-        {% endfor %}
-</ul>
-<form action = '/addtodo/' method = "post">
-    {% csrf_token %}
-    <input type = 'text' name = "content" placeholder = "Content"/>
-    <input type = 'date' name = "date_todo" placeholder = "Date"/>
-    <input type = 'submit' value = "Add"/>
-</form>
+      
+ 
+    <table style="text-align: center;">     
+        <thead>
+            <tr>
+                <th>To Do</th>
+                <th>Date</th>
+                <th>Delete</th>
+            </tr>       
+        </thead>
+        <tbody>
+            {% for todo_item in todo_items %}
+            <tr> 
+                <td>{{todo_item.content}}</td>  
+                <td> {{todo_item.date_todo}}</td>
+                <td><form action = "/deletetodo/{{todo_item.id}}/" style = "display: inline;" method = "post">
+                    {% csrf_token %}
+                    <input type = 'submit' value = "Delete"/>
+                   </form></td>            
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <form action = '/addtodo/' method = "post" style="text-align: center;">
+        {% csrf_token %}
+        <input type = 'text' name = "content" placeholder = "Content"/>
+        <input type = 'date' name = "date_todo" placeholder = "Date"/>
+        <input type = 'submit' value = "Add"/>
+    </form>
+   
+</body>
+{% endblock %}
